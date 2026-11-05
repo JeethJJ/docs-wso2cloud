@@ -34,24 +34,24 @@
   <text x="228" y="230" font-size="16" font-weight="700" fill="#dc2626">&#x2715;</text>
 
   <!-- Tunnel -->
-  <path d="M430 155 L568 155" stroke="#15803d" stroke-width="2" fill="none" marker-end="url(#g)"/>
-  <text x="499" y="140" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Outbound tunnel</text>
-  <text x="499" y="176" font-size="11" fill="#475569" text-anchor="middle">Tailscale, encrypted</text>
+  <path d="M430 155 L588 155" stroke="#15803d" stroke-width="2" fill="none" marker-end="url(#g)"/>
+  <text x="520" y="140" font-size="12" font-weight="600" fill="#0f172a" text-anchor="middle">Outbound tunnel</text>
+  <text x="520" y="176" font-size="11" fill="#475569" text-anchor="middle">Tailscale, encrypted</text>
 
   <!-- Your network -->
-  <rect x="570" y="20" width="290" height="260" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="586" y="44" font-size="14" font-weight="600" fill="#0f172a">Your network</text>
-  <text x="586" y="62" font-size="12" fill="#475569">Your tailnet</text>
+  <rect x="590" y="20" width="270" height="260" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="606" y="44" font-size="14" font-weight="600" fill="#0f172a">Your network</text>
+  <text x="606" y="62" font-size="12" fill="#475569">Your tailnet</text>
 
-  <rect x="590" y="120" width="120" height="70" rx="8" fill="#eff6ff" stroke="#2563eb"/>
-  <text x="650" y="149" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">Subnet</text>
-  <text x="650" y="168" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">router</text>
+  <rect x="606" y="120" width="112" height="70" rx="8" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="662" y="149" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">Subnet</text>
+  <text x="662" y="168" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">router</text>
 
   <rect x="740" y="120" width="104" height="70" rx="8" fill="#eff6ff" stroke="#2563eb"/>
   <text x="792" y="149" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">Private</text>
   <text x="792" y="168" font-size="13" font-weight="600" fill="#0f172a" text-anchor="middle">endpoint</text>
 
-  <path d="M710 155 L738 155" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <path d="M718 155 L738 155" stroke="#475569" stroke-width="2" fill="none" marker-end="url(#a)"/>
   <text x="792" y="214" font-size="11" fill="#475569" text-anchor="middle">For example, a</text>
   <text x="792" y="229" font-size="11" fill="#475569" text-anchor="middle">database on :5432</text>
 </svg>
