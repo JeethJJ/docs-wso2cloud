@@ -23,26 +23,51 @@ You connect each environment to your [Tailscale](https://tailscale.com) network 
 ## Prerequisites
 
 - The **OrganizationAdmin** role in the organization. Users with the **Platform Engineer** role can also manage private network access.
-- A Tailscale tailnet that you administer.
-- A [Tailscale subnet router](https://tailscale.com/kb/1019/subnets) in your network that advertises the address ranges of your private endpoints, with those routes approved in the Tailscale admin console.
-- A Tailscale [auth key](https://tailscale.com/kb/1085/auth-keys) for the gateway. See [Create an auth key](#create-an-auth-key).
-- If your tailnet uses access control policies, a rule that lets the gateway devices reach your private endpoints and ports.
+- A Tailscale tailnet that you administer. To create one, see the [Tailscale quickstart](https://tailscale.com/docs/how-to/quickstart).
+- A [subnet router](https://tailscale.com/docs/features/subnet-routers) in your network that advertises the address ranges of your private endpoints, with those routes approved.
+- A Tailscale auth key for the gateway, with the settings in [Create an auth key](#create-an-auth-key).
 
-## Create an auth key
+## Prepare your tailnet
 
-The gateway uses an auth key to join your tailnet.
+WSO2 Cloud doesn't change your tailnet. You create the auth key the gateway joins with, and, if your tailnet restricts access, allow the gateway to reach your endpoints.
 
-1. Sign in to the [Tailscale admin console](https://login.tailscale.com/admin).
-2. Go to **Settings** > **Keys**, and select **Generate auth key**.
-3. Turn on **Reusable**, so both gateway devices, and any that replace them, can use the key.
-4. Turn on **Ephemeral**, so gateway devices that stop are removed from your tailnet.
-5. Optionally, add tags that your access control policies use to allow access to your private endpoints.
-6. Choose an expiry, and select **Generate key**.
-7. Copy the key. Tailscale shows it only once.
+### Create an auth key
+
+Generate an auth key in the Tailscale admin console, as described in [Auth keys](https://tailscale.com/docs/features/access-control/auth-keys), with these settings:
+
+| Setting | Value | Why |
+| --- | --- | --- |
+| **Reusable** | On | The gateway runs two devices, and new devices replace them when the gateway restarts or updates. All of them join with the same key. |
+| **Ephemeral** | On | Gateway devices that stop are removed from your tailnet by themselves. |
+| **Tags** | Optional, such as `tag:wso2cloud` | Gateway devices get these tags, so your access policy can allow them by tag. |
+| **Expiration** | Up to 90 days | Tailscale's limit. Plan to [rotate the key](#rotate-the-auth-key) before it expires. |
+
+Copy the key when Tailscale shows it. It's shown only once.
 
 :::caution
-Auth keys expire in 90 days or less. Running gateway devices stay connected after the key expires, but new devices can't join, for example when the gateway restarts. [Rotate the auth key](#rotate-the-auth-key) before it expires.
+Running gateway devices stay connected after the key expires, but new devices can't join, for example when the gateway restarts. [Rotate the auth key](#rotate-the-auth-key) before it expires.
 :::
+
+### Allow the gateway in your access policy
+
+If your tailnet's [access policy](https://tailscale.com/docs/features/access-control/grants) doesn't allow all traffic, add a rule that lets the gateway devices reach each private endpoint and port. For example, with the `tag:wso2cloud` tag on the auth key, this lets the gateway reach a database at `10.20.0.15` on port `5432`:
+
+```json
+{
+  "tagOwners": {
+    "tag:wso2cloud": ["autogroup:admin"]
+  },
+  "grants": [
+    {
+      "src": ["tag:wso2cloud"],
+      "dst": ["10.20.0.15/32"],
+      "ip": ["tcp:5432"]
+    }
+  ]
+}
+```
+
+Allow only the addresses and ports of your endpoints, not whole networks. Use the same tag for the Development and Production auth keys only if both may reach the same endpoints. Otherwise, use a tag per environment.
 
 ## Connect an environment
 
@@ -147,7 +172,7 @@ This removes the gateway, all endpoints, and the stored auth key for the environ
 | Direction | Outbound only, from WSO2 Cloud to your network |
 | VPN provider | Tailscale only |
 
-When a direct connection to your tailnet isn't possible, Tailscale relays the traffic through its [DERP relay servers](https://tailscale.com/kb/1232/derp-servers). The traffic stays end-to-end encrypted, but latency is higher.
+When a direct connection to your tailnet isn't possible, Tailscale relays the traffic through its [DERP relay servers](https://tailscale.com/docs/reference/derp-servers). The traffic stays end-to-end encrypted, but latency is higher.
 
 ## Troubleshoot
 
@@ -155,7 +180,7 @@ When a direct connection to your tailnet isn't possible, Tailscale relays the tr
 | --- | --- |
 | The status stays **Connecting** or becomes **Degraded** | The auth key is valid, reusable, and not expired. If not, [rotate the auth key](#rotate-the-auth-key). |
 | The status is **Tunnel up**, but a workload can't connect | The workload's project is allowed for the endpoint, and the workload uses the workload address, not the private target. |
-| The workload connects, but the endpoint doesn't respond | Your subnet router advertises the target's address range, the routes are approved, and your access control policies allow the gateway devices to reach the target and port. |
+| The workload connects, but the endpoint doesn't respond | Your subnet router advertises the target's address range, the routes are approved, and your [access policy](#allow-the-gateway-in-your-access-policy) allows the gateway devices to reach the target and port. |
 | You can't add an endpoint | The port isn't already used by another endpoint and isn't reserved. |
 
 ## Next steps
