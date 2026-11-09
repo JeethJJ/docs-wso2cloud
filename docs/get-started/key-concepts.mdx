@@ -15,7 +15,7 @@ An organization holds your users, environments, and projects. Projects contain c
 <div className="hierarchy">
 
 - **Organization** The tenant boundary. Everything below belongs to one organization.
-  - **Users** Each user has an organization role, and roles in each service.
+  - **Users** Each user is in a group, and the group's role decides what they can do in every service.
   - **Environments** Such as Development and Production. Shared by every service except Platform Engineering.
   - **Projects** Group the components of one application or domain. Shared by every service except Platform Engineering, so one project can hold components from several services.
     - **Agents** Built and run with Agent Management.
@@ -33,7 +33,7 @@ An organization is the top-level tenant boundary in WSO2 Cloud. Everything else,
 
 Users are the people who belong to an organization. An administrator adds users by inviting them by email. See [Invite users](../manage/invite-users.mdx).
 
-Each user has an organization role, **OrganizationAdmin** or **Member**, that decides what they can do across the organization, such as managing users. Inside each service, service roles decide what they can do there. See [Access control](../manage/access-control.mdx).
+Each user is in a group, and each group is granted one of five built-in roles: **Admin**, **Platform Engineer**, **Developer**, **Viewer**, or **API Publisher**. The role decides what they can do across the organization and inside every service. See [Access control](../manage/access-control.mdx).
 
 ## Projects
 
