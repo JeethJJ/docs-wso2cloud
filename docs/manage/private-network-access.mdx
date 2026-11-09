@@ -22,7 +22,7 @@ You connect each environment to your [Tailscale](https://tailscale.com) network 
 
 ## Prerequisites
 
-- The **OrganizationAdmin** role in the organization. Users with the **Platform Engineer** role can also manage private network access.
+- Membership in the **Admin** or **Platform Engineer** group of the organization.
 - A Tailscale tailnet that you administer. To create one, see the [Tailscale quickstart](https://tailscale.com/docs/how-to/quickstart).
 - A [subnet router](https://tailscale.com/docs/features/subnet-routers) in your network that advertises the address ranges of your private endpoints, with those routes approved.
 - A Tailscale auth key for the gateway, with the settings in [Create an auth key](#create-an-auth-key).
@@ -72,7 +72,7 @@ Allow only the addresses and ports of your endpoints, not whole networks. Use th
 ## Connect an environment
 
 1. Sign in to the [WSO2 Cloud console](https://console.cloud.wso2.com).
-2. In the sidebar, under **Infrastructure**, select **Private Network**.
+2. In the top bar, select **Settings**, then under **Infrastructure**, select **Private Network**.
 3. Select the environment tab, **Development** or **Production**.
 4. Select **Set up private network**.
 5. In **Tailnet**, enter your tailnet name, for example `acme-corp.ts.net`.

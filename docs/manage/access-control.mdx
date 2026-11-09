@@ -1,33 +1,72 @@
 ---
 sidebar_position: 3
 title: Access control
-description: How access works in WSO2 Cloud, with organization roles across the organization and service roles in each service.
+description: How access works in WSO2 Cloud, with built-in roles granted to groups and users who join groups.
 ---
 
 # Access control
 
-Access in WSO2 Cloud works at two levels:
+Access in WSO2 Cloud works through groups and roles:
 
-- **Organization roles** decide what a user can do across the organization, such as managing users and service contacts.
-- **Service roles** decide what a user can do inside each service, such as building or deploying agents. Each service defines and manages its own roles.
+- A **role** is a set of permissions, such as creating projects or inviting users. WSO2 Cloud has five built-in roles, and they're the same in every organization and every service.
+- A **group** holds people. Each group is granted a role, and everyone in the group gets that role's permissions.
 
-## Organization roles
+You never give a role to a person directly. To decide what someone can do, you choose which group they join. You choose it when you [invite them](./invite-users.mdx).
 
-Every user in an organization has one organization role. You choose it when you [invite the user](./invite-users.mdx).
+## Built-in roles
 
 | Role | Use it for |
 | --- | --- |
-| **OrganizationAdmin** | People who administer the organization: its users, its service contacts, and every service. |
-| **Member** | Everyone else in the organization. |
+| **Admin** | People who administer the organization: its members, billing, service contacts, sign-in, and every service. |
+| **Platform Engineer** | People who run the shared infrastructure, such as environments, deployment pipelines, container registries, and private network access. |
+| **Developer** | People who build, test, and deploy in projects. |
+| **Viewer** | People who need read-only access. |
+| **API Publisher** | People who publish and manage APIs in API Management, and nothing else. |
 
-An **OrganizationAdmin** is also an admin in every service. Give this role only to the people who need to administer the organization.
+Give the **Admin** role only to the people who need to administer the organization.
 
-## Service roles
+## What each role can do
 
-Each service ships its own predefined roles, shaped around the jobs people do in that service. For example, Agent Management has **Admin**, **Developer**, **AI Lead**, and **Platform Engineer** roles. To learn about a service's roles, see its documentation:
+The table shows the main organization-level permissions. Each role also grants permissions inside each service. To see every permission a role grants, open it on the **Roles** tab. See [View groups and roles](#view-groups-and-roles).
 
-- [Agent Management](https://wso2.com/agent-platform/docs/cloud/concepts/organization/)
+| Permission | Admin | Platform Engineer | Developer | Viewer | API Publisher |
+| --- | :-: | :-: | :-: | :-: | :-: |
+| View the organization and its projects | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Create and edit projects, manage secrets and alert rules | ✓ | ✓ | ✓ | | |
+| Manage environments, deployment pipelines, container registries, private network access, and private data planes | ✓ | ✓ | | | |
+| Delete projects | ✓ | ✓ | | | |
+| Invite and remove members | ✓ | | | | |
+| Manage billing and service contacts | ✓ | | | | |
+| Set up enterprise sign-in | ✓ | | | | |
+| View audit logs | ✓ | | | | |
+| Change access control assignments | ✓ | | | | |
+
+## Groups
+
+Every organization has one built-in group for each role, with the same name as the role: **Admin**, **Platform Engineer**, **Developer**, **Viewer**, and **API Publisher**. WSO2 Cloud creates them when the organization is created.
+
+- The person who creates the organization joins the **Admin** group.
+- People you invite join the group you choose in the invitation.
+- People who sign in for the first time with [enterprise sign-in](./enterprise-sign-in.mdx) join the **Viewer** group.
+- The **Admin** group always keeps at least one member. You can't remove its last member.
+
+To change the group a member is in, [remove the member](./invite-users.mdx#remove-a-member) and [invite them again](./invite-users.mdx#send-invitations) with the new group.
+
+## View groups and roles
+
+1. Sign in to the [WSO2 Cloud console](https://console.cloud.wso2.com).
+2. In the top bar, select **Settings**.
+3. Under **Organization**, select **Access control**.
+
+The page has three tabs:
+
+- **Groups** lists the organization's groups. Select a group to see its members and the role it's granted.
+- **Roles** lists the roles and the group each one is granted to. Select a role to browse every permission it grants, grouped by service.
+- **Assignments** lists which group holds which role across the organization. Each built-in group holds the role with the same name. Admins can add an assignment to give a group another role, or delete one. The assignment that gives the **Admin** group the **Admin** role can't be deleted.
+
+Changes to a member's access take effect the next time they sign in or their session refreshes.
 
 ## Next steps
 
 - [Invite users](./invite-users.mdx)
+- [Set up enterprise sign-in](./enterprise-sign-in.mdx)
