@@ -70,6 +70,18 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Observability',
+      className: 'sidebar-section-icon-observability',
+      collapsed: false,
+      items: [
+        'observability/alerts',
+        'observability/notification-channels',
+        'observability/alert-rules',
+        'observability/alert-history',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Architecture',
       className: 'sidebar-section-icon-architecture',
       collapsed: false,
