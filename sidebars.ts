@@ -66,6 +66,7 @@ const sidebars: SidebarsConfig = {
         'manage/subscriptions-and-billing',
         'manage/manage-your-subscription',
         'manage/private-network-access',
+        'manage/container-registries',
       ],
     },
     {
