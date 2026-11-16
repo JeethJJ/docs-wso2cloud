@@ -54,6 +54,10 @@ Every organization has one built-in group for each role, with the same name as t
 
 To change the group a member is in, [remove the member](./invite-users.mdx#remove-a-member) and [invite them again](./invite-users.mdx#send-invitations) with the new group.
 
+:::note
+The built-in groups and roles are the only ones available today. Creating custom groups and roles is coming soon.
+:::
+
 ## Assignments
 
 An assignment gives a group a role, and says where that role applies. Every assignment has a scope which could be either the whole organization or an instance of a resource.
@@ -70,15 +74,23 @@ Organization-level assignments always grant access. To take access away, simply 
 
 ### Resource-level assignments
 
-A resource-level assignment gives a group a role on a single instance of a resource. Projects are the resource type available today.
+A resource-level assignment gives a group a role on a single instance of a resource. Projects are the only resource type available today.
 
 Use these when a group should reach some resources and not others. For example, to give each team its own project and nothing more, remove the Developer group's organization-level assignment and give each team's group a resource-level assignment to its own project.
 
 When you add a resource-level assignment, you also choose an environment and an effect.
 
-**Environment.** Choose **All environments**, or a single one. A group assigned a role in only one environment can still see the resource, but can work in it only in that environment. Renaming or deleting the resource itself needs an assignment that covers all environments, because the resource isn't part of any single environment.
+**Environment:** Choose **All environments**, or a single one. A group assigned a role in only one environment can still see the resource, but can work in it only in that environment. Renaming or deleting the resource itself needs an assignment that covers all environments, because the resource isn't part of any single environment.
 
-**Effect.** Choose **Allow** to grant the role, or **Deny** to take it away. A denial always wins. If one assignment allows a group on a resource and another denies it, the group is denied. Use a denial to carve one resource out of access that an organization-level assignment grants.
+**Effect:** Choose **Allow** to grant the role, or **Deny** to take it away. A denial always wins. If one assignment allows a group on a resource and another denies it, the group is denied. Use a denial to carve one resource out of access that an organization-level assignment grants.
+
+:::note
+A role can carry resource-level permissions and permissions that apply to the organization as a whole, such as managing secrets or alert rules. Scoping an assignment to a resource narrows only the resource-level permissions.
+
+**Allow** gives the group the role's resource-level permissions on that resource and environment. **Deny** takes away the role's resource-level permissions on that resource and environment. **Either effect grants** the role's organization-level permissions across the organization.
+
+Hence, it is recommended to choose a role that carries only resource-level permissions when you assign at the resource level.
+:::
 
 ### Examples
 
@@ -99,7 +111,7 @@ Each row is the complete set of assignments on one group.
 
 The page has three tabs:
 
-- **Groups** lists the organization's groups. Select a group to see its members and the role it's granted.
+- **Groups** lists the organization's groups. Select a group to see its members.
 - **Roles** lists the roles and the group each one is granted to. Select a role to browse every permission it grants, grouped by service.
 - **Assignments** lists which group holds which role, and where.
 
